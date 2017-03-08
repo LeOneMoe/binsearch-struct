@@ -4,102 +4,134 @@ class BaseBin:
 
     def Search(self, items, target):
 
-    	self.items = items
-    	self.target = target
+        self.items = items
+        self.target = target
         
         min_ = 0
-    	max_ = len(items) - 1
+        max_ = len(items) - 1
 
 
-    	while min_ <= max_:
-        	mid = (max_ + min_) // 2
+        while min_ <= max_:
+            mid = (max_ + min_) // 2
 
-        	if items[mid] == target:
+            if items[mid] == target:
             
-            	if items[mid - 1] == target:
+                if items[mid - 1] == target:
 
-                	while items[mid - 1] == target:
-                    	mid -= 1
+                    while items[mid - 1] == target:
+                        mid -= 1
 
-            	else:
-                	return mid 
+                else:
+                    return mid 
 
-        	if target > items[mid]:
-            	min_ = mid + 1
-    	    else:
-            	max_ = mid - 1
+            if target > items[mid]:
+                min_ = mid + 1
+            else:
+                max_ = mid - 1
 
-    	return - 1
+        return - 1
 
 
 
 
 class IntBin(BaseBin):
 
-	data_storage = []
+    def __init__(self, *args):
 
-    def __init__(self, *args, BaseBin):
-
-    	self.*args = *args
-    	self.BaseBin = BaseBin
+        self.args = args
 
 
-    def MyStruct(self, data_storage, *args):
+    def IntBinSearch(self, target):
 
-    	self.*args = data
+        intbin_items = []
 
-    	if all(data) != True:
-    		
-    		return "Not all items are iterable"
+        self.target = target
 
-    	else:	
-    		for element in data:
-    			
-    			for it in element:
-    				data_storage.append(temp)
-    				data_storage.sort()
+        for element in self.args:
 
-    			return "Elements are added to data-storage. \nYour data-storage now is : {0}.".format(" ,".join(data_storage))
+            if type(element) in (list, tuple, set):
+
+                for it in element:
+                        intbin_items.append(int(it))
+
+            elif type(element) == int:
+                    intbin_items.append(int(element))
+
+            else:
+
+                    return "TypeError: not all numbers are integers."
+
+            intbin_items.sort()
+
+        return BaseBin.Search(self, intbin_items, target)
 
 
-    def Search(self, BaseBin, data_storage, target)
-		
-    	self.data_storage = items
-    	self.target = target
+    def In(self, target):
 
-    	return Search(self, items, target)
+        intbin_items = []
+
+        self.target = target
 
 
-    def In(self, BaseBin, data_storage, target):
+        for element in self.args:
 
-    	self.data_storage = items
-    	self.target = target
+            if type(element) in (list, tuple, set):
 
-    	return BaseBin.Search(self, items, target) != -1
+                for it in element:
+                    intbin_items.append(int(it))
+
+            elif type(element) == int:
+                intbin_items.append(int(element))
+
+            else:
+
+                return "TypeError: not all numbers are integers."
+
+        intbin_items.sort()
+
+        return BaseBin.Search(self, intbin_items, target) != -1
 
 
 
 
 class StringBin(BaseBin):
 
-	data_storage = 0
+    stringbin_items = []
 
-    def __init__(self, *args, BaseBin):
+    def __init__(self, *args):
 
-        self.*args = *args
-        self.BaseBin = BaseBin
+        self.args = args
 
 
-    def Search(self, BaseBin, items, target):
+    def StringBinSearch(self, target):
 
-    	self.BaseBin = BaseBin
-    	self.items = items
-    	self.target = target
+        self.target = target
 
-    	for item in items:
+        for element in self.args:
 
-    		if type(item) != str:
+            if type(element) != str:
 
-    			return "Elements are not string"
-    	
-    	return BaseBin.Search(self, items, target)
+                return "TypeError: not all elements are string."
+
+        return BaseBin.Search(self, self.args, target)
+
+
+
+numbers = BaseBin()
+print(numbers.Search([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 4))
+print(numbers.Search([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 21))
+
+
+numbers = IntBin(1,2,3,4,5,6,7,8)
+print(numbers.IntBinSearch(3))
+print(numbers.IntBinSearch(9))
+print(numbers.In(3))
+print(numbers.In(12))
+
+
+string = StringBin("a", "b" ,"c" ,"d", "e", "f")
+print(string.StringBinSearch("c"))
+print(string.StringBinSearch("h"))
+
+
+
