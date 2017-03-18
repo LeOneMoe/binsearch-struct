@@ -1,0 +1,4 @@
+{
+  "implementation_test.py::test_integers": true,
+  "implementation_test.py::test_strings": true
+}

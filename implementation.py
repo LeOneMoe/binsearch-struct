@@ -2,7 +2,12 @@ class BaseBin:
 
     items = []
 
-    def search(self, items, target):
+    def search(self, target):
+
+        raise NotImplementedError('Method `search` must be implemented')
+
+
+    def _search(self, items, target):
 
         self.items = items
         self.target = target
@@ -33,19 +38,11 @@ class BaseBin:
 
 class IntBin(BaseBin):
 
-    items = []
-
     def __init__(self, *args):
 
         self.args = args
 
-
-    def __contains__(self, target):
-
-        self.target = target
-
-
-        for element in self.args:
+        for element in args:
 
             if type(element) in (list, tuple, set):
 
@@ -57,38 +54,21 @@ class IntBin(BaseBin):
 
             else:
 
-                return "TypeError: not all numbers are integers."
+                raise TypeError("Not all numbers are integers.")
 
-        self.items.sort()
+            self.items.sort()
 
-        if BaseBin.search(self, self.items, self.target) != -1:
+
+    def __contains__(self, target):
+
+        if self._search(self.items, target) != -1:
 
             return True
 
 
-    def _search(self, target):
+    def search(self, target):
 
-        items = []
-
-        self.target = target
-
-        for element in self.args:
-
-            if type(element) in (list, tuple, set):
-
-                for it in element:
-                        items.append(int(it))
-
-            elif type(element) == int:
-                    items.append(int(element))
-
-            else:
-
-                    return "TypeError: not all numbers are integers."
-
-            items.sort()
-
-        return BaseBin.search(self, items, target)
+        return self._search(self.items, target)
 
 
 
@@ -101,43 +81,20 @@ class StringBin(BaseBin):
 
         self.args = args
 
-
-    def _search(self, target):
-
-
-        self.target = target
-
         for element in self.args:
 
             if type(element) != str:
 
-                return "TypeError: not all elements are string."
+                raise TypeError("Not all elements are string.")
 
             else:
                 self.items.append(element)
 
         self.items.sort()
 
-        return BaseBin.search(self, self.items, target)
 
+    def search(self, target):
 
+        self.target = target
 
-numbers = BaseBin()
-print(numbers.search([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 4))
-print(numbers.search([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 21))
-print(numbers.search([0, 1, 2, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 6, 7, 8, 9], 4))
-
-
-numbers = IntBin(1,2,3,4,5,6,7,8)
-print(numbers._search(3))
-print(numbers._search(9))
-print(5 in numbers)
-print(10 in numbers)
-
-
-string = StringBin("a", "b" ,"c" ,"d", "e", "f")
-print(string._search("c"))
-print(string._search("h"))
-
-
-
+        return self._search(self.items, target)
