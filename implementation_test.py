@@ -7,7 +7,7 @@ def test_integers():
 
     integers = IntBin(1, 5, 2, 7, 9, 9, 4)
 
-    assert integers.search(5) == 4
+    assert integers.search(5) == 3
     assert integers.search(1) == 0
     assert integers.search(9) == 5
     assert (4 in integers) == True

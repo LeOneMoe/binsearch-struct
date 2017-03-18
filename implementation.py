@@ -40,30 +40,38 @@ class IntBin(BaseBin):
 
     def __init__(self, *args):
 
-        self.args = args
+        if isinstance(args[1], (set, tuple, list)):
 
-        for element in args:
+            for element in args:
 
-            if type(element) in (list, tuple, set):
+                if isinstance(element, int):
+                    self.items.append(element)
 
-                for it in element:
-                    self.items.append(int(it))
+                else:
+                    raise TypeError("Not all elements are integer")
 
-            elif type(element) == int:
-                self.items.append(int(element))
+        elif isinstance(args[1], int):
 
-            else:
+            for element in args:
 
-                raise TypeError("Not all numbers are integers.")
+                if isinstance(element, int):
+                    self.items.append(element)
 
-            self.items.sort()
+                else:
+                    raise TypeError("Not all elements are integer")
+
+        else:
+            raise TypeError("Not suported type")
+
+        self.items.sort()
+
+        print(self.items)
+
 
 
     def __contains__(self, target):
 
-        if self._search(self.items, target) != -1:
-
-            return True
+        return self._search(self.items, target) != -1
 
 
     def search(self, target):
@@ -79,18 +87,32 @@ class StringBin(BaseBin):
 
     def __init__(self, *args):
 
-        self.args = args
+        if isinstance(args[1], (set, tuple, list)):
 
-        for element in self.args:
+            for element in args:
 
-            if type(element) != str:
+                if isinstance(element, str):
+                    self.items.append(element)
 
-                raise TypeError("Not all elements are string.")
+                else:
+                    raise TypeError("Not all elements are string")
 
-            else:
-                self.items.append(element)
+        elif isinstance(args[1], str):
+
+            for element in args:
+
+                if isinstance(element, str):
+                    self.items.append(element)
+
+                else:
+                    raise TypeError("Not all elements are string")
+
+        else:
+            raise TypeError("Not suported type")
 
         self.items.sort()
+
+        print(self.items)
 
 
     def search(self, target):
