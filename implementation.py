@@ -40,7 +40,7 @@ class IntBin(BaseBin):
 
     def __init__(self, *args):
 
-        if isinstance(args[1], (set, tuple, list)):
+        if len(args) and isinstance(args[0], (set, tuple, list)):
 
             for element in args:
 
@@ -50,7 +50,7 @@ class IntBin(BaseBin):
                 else:
                     raise TypeError("Not all elements are integer")
 
-        elif isinstance(args[1], int):
+        elif len(args) > 0:
 
             for element in args:
 
@@ -61,12 +61,9 @@ class IntBin(BaseBin):
                     raise TypeError("Not all elements are integer")
 
         else:
-            raise TypeError("Not suported type")
+            raise TypeError("Not suported type or empty input")
 
         self.items.sort()
-
-        print(self.items)
-
 
 
     def __contains__(self, target):
@@ -87,7 +84,7 @@ class StringBin(BaseBin):
 
     def __init__(self, *args):
 
-        if isinstance(args[1], (set, tuple, list)):
+        if len(args) > 0 and isinstance(args[0], (set, tuple, list)):
 
             for element in args:
 
@@ -97,7 +94,7 @@ class StringBin(BaseBin):
                 else:
                     raise TypeError("Not all elements are string")
 
-        elif isinstance(args[1], str):
+        elif len(args) > 0:
 
             for element in args:
 
@@ -108,11 +105,9 @@ class StringBin(BaseBin):
                     raise TypeError("Not all elements are string")
 
         else:
-            raise TypeError("Not suported type")
+            raise TypeError("Not suported type or empty input")
 
         self.items.sort()
-
-        print(self.items)
 
 
     def search(self, target):
@@ -120,3 +115,10 @@ class StringBin(BaseBin):
         self.target = target
 
         return self._search(self.items, target)
+
+
+
+numbers = IntBin(1)
+print(numbers)
+string = StringBin("a")
+print(string)
