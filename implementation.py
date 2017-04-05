@@ -117,6 +117,11 @@ class StringBin(BaseBin):
         return self._search(self.items, target)
 
 
+    def __contains__(self, target):
+
+        return self._search(self.items, target) != -1
+
+
 
 numbers = IntBin(1)
 print(numbers)
