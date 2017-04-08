@@ -40,9 +40,9 @@ class IntBin(BaseBin):
 
     def __init__(self, *args):
 
-        if len(args) and isinstance(args[0], (set, tuple, list)):
+        if len(args) > 0 and isinstance(args[0], (set, tuple, list)):
 
-            for element in args:
+            for element in args[0]:
 
                 if isinstance(element, int):
                     self.items.append(element)
@@ -86,7 +86,7 @@ class StringBin(BaseBin):
 
         if len(args) > 0 and isinstance(args[0], (set, tuple, list)):
 
-            for element in args:
+            for element in args[0]:
 
                 if isinstance(element, str):
                     self.items.append(element)
@@ -123,7 +123,16 @@ class StringBin(BaseBin):
 
 
 
-numbers = IntBin(1)
-print(numbers)
-string = StringBin("a")
-print(string)
+integers = IntBin(1, 5, 2, 7, 9, 9, 4)
+print(integers.search(5) == 3)
+print(integers.search(1) == 0)
+print(integers.search(9) == 5)
+print((4 in integers) == True)
+print((10 in integers) == False)
+
+strings = StringBin(['a', 'mama', 'papa', 'papa', 'vasa', 'kola'])
+print(strings.search('mama') == 2)
+print(strings.search('a') == 0)
+print(strings.search('papa') == 3)
+print(('vasa' in strings) == True)
+print(('olala' in strings) == False)
